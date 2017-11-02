@@ -101,3 +101,7 @@ body {
    height: 0;
    clear: both;
 }
+
+.container.narrow {
+   max-width: 56rem;
+}

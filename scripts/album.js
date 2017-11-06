@@ -28,6 +28,21 @@ var albumMarconi = {
         { title: 'Wrong phone number', duration: '2:15'}
     ]
 };
+// My Example Album
+var albumSolange = {
+    title: 'A seat at the table',
+    artist: 'Solange Knowles',
+    label: 'EM',
+    year: '2017',
+    albumArtUrl: 'assets/images/album_covers/15.png',
+    songs: [
+        { title: 'Cranes in the sky', duration: '3:01' },
+        { title: 'Dont touch my hair', duration: '4:05' },
+        { title: 'Mad', duration: '3:11'},
+        { title: 'Where did we go', duration: '3:46' },
+        { title: 'Weary', duration: '4:15'}
+    ]
+};
 
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
@@ -40,22 +55,22 @@ var createSongRow = function(songNumber, songName, songLength) {
 
      return template;
  };
- 
- var setCurrentAlbum = function(album) {
-     // #1
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
-     // #2
+// Select elements we want to populate with text dynamically - need to exist in global scope
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
+ var setCurrentAlbum = function(album) {
+     // Assigns value to each part of the album
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
      albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
      albumImage.setAttribute('src', album.albumArtUrl);
 
-     // #3
+     // Clear contents of album song list container
      albumSongList.innerHTML = '';
 
      // #4
@@ -66,4 +81,14 @@ var createSongRow = function(songNumber, songName, songLength) {
 
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+
+     var albums =[albumPicasso, albumMarconi, albumSolange];
+     var index = 1; //start at 1 because if page loads at first album and users clicks, it will stay on first album and act as if nothing happend.
+     albumImage.addEventListener('click', function(event){
+       setCurrentAlbum(albums[index]);
+       index++;
+       if (index == albums.length){
+         index = 0;
+       }
+     });
  };

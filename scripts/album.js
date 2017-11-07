@@ -88,6 +88,14 @@ var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
         }
         return currentParent;
     }
+    if(element.parentElement == null) {
+   console.log('No parent found.');
+   //review w Joey
+}
+    if(element.parentElement !== targetClass) {
+    console.log('No parent found with that class name');
+    //review w Joey
+}
 };
 
 var getSongItem = function(element) {

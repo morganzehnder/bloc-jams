@@ -90,11 +90,11 @@ var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
     }
     if(element.parentElement == null) {
    console.log('No parent found.');
-   //review w Joey
-}
+   //review w Joey assignment 26
+ }
     if(element.parentElement !== targetClass) {
     console.log('No parent found with that class name');
-    //review w Joey
+    //review w Joey assignment 26
 }
 };
 

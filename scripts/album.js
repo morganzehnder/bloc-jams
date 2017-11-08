@@ -47,36 +47,36 @@ var albumSolange = {
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
-      + '  <td class="song-item-number">' + songNumber + '</td>'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
       + '  <td class="song-item-duration">' + songLength + '</td>'
       + '</tr>'
       ;
 
-     return template;
+     return $(template);
  };
 
 // Select elements we want to populate with text dynamically - need to exist in global scope
-var albumTitle = document.getElementsByClassName('album-view-title')[0];
-var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-var albumImage = document.getElementsByClassName('album-cover-art')[0];
-var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+var $albumTitle = $('.album-view-title');
+var $albumArtist = $('.album-view-artist');
+var $albumReleaseInfo = $('.album-view-release-info');
+var $albumImage = $('.album-cover-art');
+var $albumSongList = $('.album-view-song-list');
 
  var setCurrentAlbum = function(album) {
      // Assigns value to each part of the album
-     albumTitle.firstChild.nodeValue = album.title;
-     albumArtist.firstChild.nodeValue = album.artist;
-     albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
-     albumImage.setAttribute('src', album.albumArtUrl);
+     $albumTitle.text(album.title);
+     $albumArtist.text(album.artist);
+     $albumReleaseInfo.text(album.year + ' ' + album.label);
+     $albumImage.attr('src', album.albumArtUrl);
 
      // Clear contents of album song list container
-     albumSongList.innerHTML = '';
+    $albumSongList.empty();
 
      // #4
      for (var i = 0; i < album.songs.length; i++) {
-         albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+       var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+       $albumSongList.append($newRow);
      }
  };
 
@@ -152,21 +152,14 @@ var currentlyPlayingSong = null;
         if (event.target.parentElement.className === 'album-view-song-item') {
             // Change the content from the number to the play button's HTML
             var songItem = getSongItem(event.target);
-          if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
+            var songItemNumber = songItem.getAttribute('data-song-number');
+          if (songItemNumber !== currentlyPlayingSong) {
                songItem.innerHTML = playButtonTemplate;
            }
         }
      });
 
-     var albums =[albumPicasso, albumMarconi, albumSolange];
-     var index = 1; //start at 1 because if page loads at first album and users clicks, it will stay on first album and act as if nothing happend.
-     albumImage.addEventListener('click', function(event){
-       setCurrentAlbum(albums[index]);
-       index++;
-       if (index == albums.length){
-         index = 0;
-       }
-     });
+
      for (var i = 0; i < songRows.length; i++) {
        songRows[i].addEventListener('mouseleave', function(event) {
            // Revert the content back to the number

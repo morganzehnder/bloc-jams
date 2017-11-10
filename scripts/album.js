@@ -36,7 +36,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 
      var onHover = function(event) {
        var songNumberCell = $(this).find('.song-item-number');// use "this to refer back to row, and find to find item by class within that row"
-          var songNumber = songNumberCell.attr('data-song-number');
+          var songNumber = parseInt(songNumberCell.attr('data-song-number'));
 
           if (songNumber !== currentlyPlayingSongNumber) {
               songNumberCell.html(playButtonTemplate);
@@ -44,7 +44,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 };
 var offHover = function(event) {
     var songNumberCell = $(this).find('song-item-number');
-    var songNumber = songNumberCell.attr('data-song-number');
+    var songNumber = parseInt(songNumberCell.attr('data-song-number'));
     if (songNumber !== currentlyPlayingSongNumber) {
       songNumberCell.html(songNumber);
     }
@@ -153,7 +153,7 @@ var playerBarPauseButton = '<span class="ion-pause"></span>';
 
 //storing starting states
 var currentAlbum = null;
-var currentlyPlayingSongNumber = null;
+var currentlyPlayingSongNumber = parseInt(null);
 var currentSongFromAlbum = null;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
